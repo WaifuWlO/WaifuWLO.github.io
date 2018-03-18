@@ -1,6 +1,6 @@
 AFRAME.registerComponent('test01', {
   schema: {
-  coolvalue: {type: 'number'}
+  coolvalue: {type: 'int', default: 1}
   },
   init: function () {},
   update: function () {},

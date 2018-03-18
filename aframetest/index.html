@@ -5,6 +5,8 @@
 	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/0.7.1/aframe.js"></script>
 <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.0.2/dist/aframe-physics-system.min.js"></script>
+<script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.12.4/dist/aframe-extras.min.js"></script> 
+ <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script> 
 <script src="scripttest.js"></script>
 	
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%7CRoboto+Mono" media="all" /></head>
@@ -12,6 +14,10 @@
 <body class="a-body ">
 <a-scene class="fullscreen" physics="debug: true" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui=""><canvas class="a-canvas" data-aframe-canvas="true" width="300" height="150"></canvas>
 
+	<a-entity progressive-controls="objects: a-box"></a-entity>
+   	<!-- hover & drag-drop won't have any obvious effect without some additional event handlers or components. See the examples page for more -->
+  	<a-box hoverable grabbable stretchable draggable dropppable color="blue" position="-1 0.7 3"></a-box>
+	
 	<a-box dynamic-body position="-1 0.5 3" rotation="0 0 0" color="red" shadow="" material="" geometry=""></a-box>
 	<a-box dynamic-body position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow="" material="" geometry=""></a-box>
 	<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow="" material="" geometry=""></a-sphere>

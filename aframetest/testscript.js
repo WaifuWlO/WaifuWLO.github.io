@@ -1,5 +1,7 @@
-AFRAME.registerComponent('foo', {
-  schema: {},
+AFRAME.registerComponent('test01', {
+  schema: {
+  coolvalue: {type: 'number'}
+  },
   init: function () {},
   update: function () {},
   tick: function () {},

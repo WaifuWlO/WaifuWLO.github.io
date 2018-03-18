@@ -14,13 +14,17 @@
 <body class="a-body ">
 <a-scene class="fullscreen" stats physics="debug: true" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui=""><canvas class="a-canvas" data-aframe-canvas="true" width="300" height="150"></canvas>
 
+	<a-assets>
+  	  <a-asset-item id="kirby1" src="https://waifuwlo.github.io/aframetest/model.dae"></a-asset-item>
+  	</a-assets>
+	
 	<a-entity progressive-controls="objects: a-box"></a-entity>
    	<!-- hover & drag-drop won't have any obvious effect without some additional event handlers or components. See the examples page for more -->
   	<a-box hoverable grabbable stretchable draggable dropppable color="blue" position="-1 0.7 3"></a-box>
 	
 	<a-plane static-body position="0 -1 -4" rotation="-90 0 0" width="10" height="4" color="brown" shadow="" material="" geometry=""></a-plane>
 	
-	<a-entity gltf-model="//cdn.rawgit.com/KhronosGroup/glTF-Sample-Models/2.0/Avocado/glTF/Avocado.gltf " scale="0.01 0.01 0.01"></a-entity>
+	  <a-entity collada-model="#kirby1"></a-entity>
 	
 	<a-box dynamic-body position="-1 0.5 3" rotation="0 0 0" color="red" shadow="" material="" geometry=""></a-box>
 	<a-box dynamic-body position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow="" material="" geometry=""></a-box>

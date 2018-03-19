@@ -21,14 +21,14 @@
 	  <a-asset-item id="haltmannroom" src="https://waifuwlo.github.io/aframetest/haltmanport1/haltmannroom2.dae"></a-asset-item>										 
   	</a-assets>
 	
-	
+	<a-entity progressive-controls="objects: a-box"></a-entity>
 	
    	<!-- hover & drag-drop won't have any obvious effect without some additional event handlers or components. See the examples page for more -->
   	<a-box hoverable grabbable stretchable draggable dropppable color="blue" position="-1 0.7 3"></a-box>
 	
 	<a-plane static-body keyboard-controls position="0 -1 -4" rotation="-90 0 0" width="10" height="4" length="10" color="brown; on: keydown:KeyR" shadow="" material="" geometry=""></a-plane>
 	
-	  <a-entity collada-model="#haltmannroom" rotation="0 0 0" position ="0 0 0"></a-entity>
+	  <a-entity collada-model="#kirby1" rotation="0 0 0" position ="0 0 0"></a-entity>
 	
 	<a-box dynamic-body position="-1 0.5 3" rotation="0 0 0" color="red" shadow="" material="" geometry=""></a-box>
 	<a-box dynamic-body position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow="" material="" geometry=""></a-box>

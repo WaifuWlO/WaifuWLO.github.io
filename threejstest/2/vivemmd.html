@@ -21,12 +21,12 @@
 	</head>
 	<body>
 
-		<script src="https://raw.githubusercontent.com/mrdoob/three.js/master/build/three.js"></script>
+		<script src="../three.js"></script>
 
-		<script src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/js/vr/ViveController.js"></script>
-		<script src="..WebVR.js"></script>
+		<script src="../ViveController.js"></script>
+		<script src="../WebVR.js"></script>
 
-		<script src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/js/loaders/OBJLoader.js"></script>
+		<script src="../OBJLoader.js"></script>
 
 		<script>
 			var clock = new THREE.Clock();
@@ -94,10 +94,10 @@
 				controller2.standingMatrix = renderer.vr.getStandingMatrix();
 				scene.add( controller2 );
 				var loader = new THREE.OBJLoader();
-				loader.setPath( 'three.js/examples/models/obj/vive-controller/' );
+				loader.setPath( '.../models/controller/vive/' );
 				loader.load( 'vr_controller_vive_1_5.obj', function ( object ) {
 					var loader = new THREE.TextureLoader();
-					loader.setPath( 'three.js/examples/models/obj/vive-controller/' );
+					loader.setPath( '.../models/controller/vive/' );
 					var controller = object.children[ 0 ];
 					controller.material.map = loader.load( 'onepointfive_texture.png' );
 					controller.material.specularMap = loader.load( 'onepointfive_spec.png' );

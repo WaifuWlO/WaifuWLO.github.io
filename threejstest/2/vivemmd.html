@@ -40,7 +40,7 @@
 		<script>
 			var clock = new THREE.Clock();
 			var container;
-			var camera, scene, renderer;
+			var mesh, camera, scene, renderer, effect;
 			var controller1, controller2;
 			var room;
 			
@@ -107,7 +107,7 @@
 				document.body.appendChild( WEBVR.createButton( renderer ) );
 				
 				var modelFile = '.../models/mmd/rwby/Neo.pmx';
-				helper = new THREE.MMDHelper();
+				this.helper = new THREE.MMDHelper();
 				var loader = new THREE.MMDLoader();
 				
 				loader.load( modelFile, function ( object ) {

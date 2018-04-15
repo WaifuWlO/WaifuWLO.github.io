@@ -22,10 +22,11 @@
 	<body>
 
 		<script src="../three.js"></script>
-
+		
+		<script src="../VRController.js"></script>
 		<script src="../ViveController.js"></script>
 		<script src="../WebVR.js"></script>
-
+		<script src="../datguivr.js"></script>
 		<script src="../OBJLoader.js"></script>
 
 		<script>
@@ -116,9 +117,101 @@
 				renderer.animate( render );
 			}
 			//
+			
+	window.addEventListener( 'vr controller connected', function( event ){
+
+
+	//  Here it is, your VR controller instance.
+	//  It’s really a THREE.Object3D so you can just add it to your scene:
+
+	var controller = event.detail;
+	scene.add( controller );
+
+
+	//  HEY HEY HEY! This is important. You need to make sure you do this.
+	//  For standing experiences (not seated) we need to set the standingMatrix
+	//  otherwise you’ll wonder why your controller appears on the floor
+	//  instead of in your hands! And for seated experiences this will have no
+	//  effect, so safe to do either way:
+
+	controller.standingMatrix = renderer.vr.getStandingMatrix();
+
+
+	//  And for 3DOF (seated) controllers you need to set the controller.head
+	//  to reference your camera. That way we can make an educated guess where
+	//  your hand ought to appear based on the camera’s rotation.
+
+	controller.head = window.camera;
+
+
+	//  Right now your controller has no visual.
+	//  It’s just an empty THREE.Object3D.
+	//  Let’s fix that!
+
+	var
+	meshColorOff = 0xDB3236,//  Red.
+	meshColorOn  = 0xF4C20D,//  Yellow.
+	controllerMaterial = new THREE.MeshStandardMaterial({
+
+		color: meshColorOff;
+	}),
+	controllerMesh = new THREE.Mesh(
+
+		new THREE.CylinderGeometry( 0.005, 0.05, 0.1, 6 ),
+		controllerMaterial;
+	),
+	handleMesh = new THREE.Mesh(
+
+		new THREE.BoxGeometry( 0.03, 0.1, 0.03 ),
+		controllerMaterial;
+	)
+
+	controllerMaterial.flatShading = true;
+	controllerMesh.rotation.x = -Math.PI / 2;
+	handleMesh.position.y = -0.05;
+	controllerMesh.add( handleMesh );
+	controller.userData.mesh = controllerMesh;//  So we can change the color later.
+	controller.add( controllerMesh );
+	castShadows( controller );
+	receiveShadows( controller );
+
+
+	//  Allow this controller to interact with DAT GUI.
+
+	var guiInputHelper = dat.GUIVR.addInputObject( controller );
+	scene.add( guiInputHelper );
+
+
+	//  Button events. How easy is this?!
+	//  We’ll just use the “primary” button -- whatever that might be ;)
+	//  Check out the THREE.VRController.supported{} object to see
+	//  all the named buttons we’ve already mapped for you!
+
+	controller.addEventListener( 'primary press began', function( event ){
+
+		event.target.userData.mesh.material.color.setHex( meshColorOn );
+		guiInputHelper.pressed( true );
+	})
+	controller.addEventListener( 'primary press ended', function( event ){
+
+		event.target.userData.mesh.material.color.setHex( meshColorOff );
+		guiInputHelper.pressed( false );
+	})
+
+
+	//  Daddy, what happens when we die?
+
+	controller.addEventListener( 'disconnected', function( event ){
+
+		controller.parent.remove( controller );
+	})
+})
+
+
 			function render() {
 				var delta = clock.getDelta() * 60;
 				controller1.update();
+				THREE.VRController.update();
 				controller2.update();
 				for ( var i = 0; i < room.children.length; i ++ ) {
 					var cube = room.children[ i ];

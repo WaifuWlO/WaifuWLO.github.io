@@ -91,6 +91,11 @@
 				var material = new THREE.MeshStandardMaterial();
 				var loader = new THREE.OBJLoader();
 				
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				container.appendChild( renderer.domElement );
+				
 				effect = new THREE.OutlineEffect( renderer );
 				
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -104,7 +109,7 @@
 				helper = new THREE.MMDHelper();
 				var loader = new THREE.MMDLoader();
 				
-				loader.load( modelFile, vmdFiles, function ( object ) {
+				loader.load( modelFile, function ( object ) {
 					mesh = object;
 					mesh.position.y = -10;
 					scene.add( mesh );

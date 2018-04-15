@@ -98,7 +98,7 @@
 				//var vmdFiles = [ 'models/mmd/vmds/wavefile_v2.vmd' ];
 				helper = new THREE.MMDHelper();
 				var loader = new THREE.MMDLoader();
-				loader.load( modelFile, vmdFiles, function ( object ) {
+				loader.load( modelFile, function ( object ) {
 					mesh = object;
 					mesh.position.y = -10;
 					scene.add( mesh );

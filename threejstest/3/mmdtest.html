@@ -198,6 +198,8 @@
 			
 			//---------------------------------------------
 			
+			var parser = new MMDParser.Parser();
+			
 			 function load (url, responseType, mimeType, onLoad, onProgress, onError) {
     var request = new XMLHttpRequest();
     request.open('GET', url, true);

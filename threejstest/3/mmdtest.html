@@ -228,11 +228,11 @@
 			 function testPmx () {
    				 console.log('PMX parse test');
     					load(
-      						'../../models/mmd/rwby/Neo/Neo.pmx',
+      						'https://cdn.rawgit.com/mrdoob/three.js/dev/examples/models/mmd/miku/miku_v2.pmd',
      						 'arraybuffer',
     					  undefined,
     			  function (buffer) {
-        			var pmx = parser.parsePmx(buffer);
+        			var pmx = parser.parsePmd(buffer);
       				  console.log(pmx);
      			 }
     			);

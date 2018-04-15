@@ -108,7 +108,7 @@
 				document.body.appendChild( WEBVR.createButton( renderer ) );
 				
 				var modelFile = '.../models/mmd/rwby/Neo.pmx';
-				this.helper = new THREE.MMDHelper();
+				helper = new THREE.MMDHelper();
 				var loader = new THREE.MMDLoader();
 				
 				loader.load( modelFile, function ( object ) {

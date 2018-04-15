@@ -195,6 +195,47 @@
 				if ( ikHelper !== undefined && ikHelper.visible ) ikHelper.update();
 				effect.render( scene, camera );
 			}
+			
+			//---------------------------------------------
+			
+			 function load (url, responseType, mimeType, onLoad, onProgress, onError) {
+    var request = new XMLHttpRequest();
+    request.open('GET', url, true);
+    request.addEventListener('load', function (event) {
+      var response = event.target.response;
+      if (this.status === 200) {
+        onLoad(response);
+      } else if (this.status === 0) {
+        console.warn('HTTP Status 0 received.');
+        onLoad(response);
+      } else {
+        console.warn('HTTP Status ' + this.status + ' received.');
+        onError(event);
+      }
+    }, false);
+    if (onProgress !== undefined) request.addEventListener('progress', onProgress, false);
+    if (onError !== undefined) request.addEventListener('error', onError, false);
+    request.responseType = responseType;
+    if (mimeType !== undefined) request.overrideMimeType(mimeType)
+    request.send(null);
+    console.log('downloading: ' + url);
+  }
+			
+			
+			 function testPmx () {
+   				 console.log('PMX parse test');
+    					load(
+      						'../../models/mmd/rwby/Neo/Neo.pmx',
+     						 'arraybuffer',
+    					  undefined,
+    			  function (buffer) {
+        			var pmx = parser.parsePmx(buffer);
+      				  console.log(pmd);
+     			 }
+    			);
+ 			 }
+
+  			testPmx();
 		</script>
 
 	</body>

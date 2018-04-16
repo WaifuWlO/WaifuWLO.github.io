@@ -191,10 +191,10 @@
 				stats.end();
 			}
 			function render() {
-				helper.animate( clock.getDelta() );
+				//helper.animate( clock.getDelta() );
 				if ( physicsHelper !== undefined && physicsHelper.visible ) physicsHelper.update();
 				if ( ikHelper !== undefined && ikHelper.visible ) ikHelper.update();
-				effect.render( scene, camera, mesh );
+				effect.render( scene, camera );
 			}
 			/*
 			//---------------------------------------------

@@ -24,28 +24,38 @@
 		<script src="../three.js"></script>
 		<script src="../three.min.js"></script>
 		
-		<script src="../VRController.js"></script>
-		<script src="../ViveController.js"></script>
-		<script src="../WebVR.js"></script>
-		<script src="../datguivr.js"></script>
-		<script src="../OBJLoader.js"></script>
-		
 		<script src="../mmdparser.min.js"></script>
+		<script src="../mmdparser.js"></script>
 		<script src="../ammo.js"></script>
+
 		<script src="../TGALoader.js"></script>
 		<script src="../MMDLoader.js"></script>
 		<script src="../OutlineEffect.js"></script>
 		<script src="../CCDIKSolver.js"></script>
 		<script src="../MMDPhysics.js"></script>
 
+		<script src="../OrbitControls.js"></script>
+
+		<script src="../Detector.js"></script>
+		<script src="../stats.min.js"></script>
+		<script src="../dat.gui.min.js"></script>
+		
+		<script src="../VRController.js"></script>
+		<script src="../ViveController.js"></script>
+		<script src="../WebVR.js"></script>
+		<script src="../datguivr.js"></script>
+		<script src="../OBJLoader.js"></script>
+
 		<script>
 			var clock = new THREE.Clock();
-			var container;
-			var camera, scene, renderer;
+			var container, stats;
+			var mesh, camera, scene, renderer, effect;
 			var mesh, effect;
 			var controller1, controller2;
 			var room;
-			
+			var mouseX = 0, mouseY = 0;
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
 			var helper, ikHelper, physicsHelper;
 			
 			init();
@@ -105,11 +115,12 @@
 				
 				effect = new THREE.OutlineEffect( renderer );
 				
-				var modelFile = '.../models/mmd/rwby/Neo.pmx';
+				var modelFile = '../../models/mmd/rwby/Neo/Neo.pmd';//  ../../models/mmd/rwby/Neo/Neo.pmd - ../../models/mmd/miku_v2.pmd
+				var vmdFiles = [ '../../models/mmd/animation/wavefile_v2.vmd' ];
 				helper = new THREE.MMDHelper();
 				var loader = new THREE.MMDLoader();
 				
-				loader.load( modelFile, function ( object ) {
+				loader.load( modelFile, vmdFiles, function ( object ) {
 					mesh = object;
 					mesh.position.y = -10;
 					scene.add( mesh );
@@ -131,8 +142,10 @@
 					scene.add( physicsHelper );
 					helper.unifyAnimationDuration( { afterglow: 2.0 } );
 					
-				});
-					    
+				}, onProgress, onError);
+				
+				window.addEventListener( 'resize', onWindowResize, false );
+				
 				var phongMaterials;
 				var originalMaterials;
 				function makePhongMaterials ( materials ) {
@@ -146,6 +159,53 @@
 					phongMaterials = array;
 				}
 				
+				function initGui () {
+					var api = {
+						'animation': true,
+						'gradient mapping': true,
+						'ik': true,
+						'outline': true,
+						'physics': true,
+						'show IK bones': false,
+						'show rigid bodies': false
+					};
+					var gui = new dat.GUI();
+					gui.add( api, 'animation' ).onChange( function () {
+						helper.doAnimation = api[ 'animation' ];
+					} );
+					gui.add( api, 'gradient mapping' ).onChange( function () {
+						if ( originalMaterials === undefined ) originalMaterials = mesh.material;
+						if ( phongMaterials === undefined ) makePhongMaterials( mesh.material );
+						if ( api[ 'gradient mapping' ] ) {
+							mesh.material = originalMaterials;
+						} else {
+							mesh.material = phongMaterials;
+						}
+					} );
+					gui.add( api, 'ik' ).onChange( function () {
+						helper.doIk = api[ 'ik' ];
+					} );
+					gui.add( api, 'outline' ).onChange( function () {
+						effect.enabled = api[ 'outline' ];
+					} );
+					gui.add( api, 'physics' ).onChange( function () {
+						helper.enablePhysics( api[ 'physics' ] );
+					} );
+					gui.add( api, 'show IK bones' ).onChange( function () {
+						ikHelper.visible = api[ 'show IK bones' ];
+					} );
+					gui.add( api, 'show rigid bodies' ).onChange( function () {
+						if ( physicsHelper !== undefined ) physicsHelper.visible = api[ 'show rigid bodies' ];
+					} );
+				}
+			}
+			function onWindowResize() {
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				effect.setSize( window.innerWidth, window.innerHeight );
+			}
 				// controllers
 				controller1 = new THREE.ViveController( 0 );
 				controller1.standingMatrix = renderer.vr.getStandingMatrix();
@@ -176,6 +236,9 @@
 				
 				requestAnimationFrame( animate );
 				renderer.animate( render );
+				stats.begin();
+				render();
+				stats.end();
 			}
 			//
 			

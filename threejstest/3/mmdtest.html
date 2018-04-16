@@ -194,7 +194,7 @@
 				helper.animate( clock.getDelta() );
 				if ( physicsHelper !== undefined && physicsHelper.visible ) physicsHelper.update();
 				if ( ikHelper !== undefined && ikHelper.visible ) ikHelper.update();
-				effect.render( scene, camera );
+				effect.render( scene, camera, mesh );
 			}
 			/*
 			//---------------------------------------------

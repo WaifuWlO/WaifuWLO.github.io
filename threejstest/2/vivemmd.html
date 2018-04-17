@@ -115,6 +115,15 @@
 				
 				effect = new THREE.OutlineEffect( renderer );
 				
+				var onProgress = function ( xhr ) {
+					if ( xhr.lengthComputable ) {
+						var percentComplete = xhr.loaded / xhr.total * 100;
+						console.log( Math.round(percentComplete, 2) + '% downloaded' );
+					}
+				};
+				var onError = function ( xhr ) {
+				};
+				
 				var modelFile = '../../models/mmd/rwby/Neo/Neo.pmd';//  ../../models/mmd/rwby/Neo/Neo.pmd - ../../models/mmd/miku_v2.pmd
 				var vmdFiles = [ '../../models/mmd/animation/wavefile_v2.vmd' ];
 				helper = new THREE.MMDHelper();

@@ -115,6 +115,10 @@
 				
 				effect = new THREE.OutlineEffect( renderer );
 				
+				// STATS
+				stats = new Stats();
+				container.appendChild( stats.dom );
+				
 				var onProgress = function ( xhr ) {
 					if ( xhr.lengthComputable ) {
 						var percentComplete = xhr.loaded / xhr.total * 100;

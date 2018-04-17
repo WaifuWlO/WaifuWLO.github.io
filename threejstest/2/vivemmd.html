@@ -135,7 +135,7 @@
 				
 				loader.load( modelFile, vmdFiles, function ( object ) {
 					mesh = object;
-					mesh.position.y = -10;
+					mesh.position.y = 1;
 					mesh.scale.x = 0.2;
 					mesh.scale.y = 0.2;
 					mesh.scale.z = 0.2;
@@ -152,7 +152,7 @@
 					 * Note: You're recommended to call helper.setPhysics()
 					 *       after calling helper.setAnimation().
 			 		 */
-					helper.setPhysics( mesh );
+					//helper.setPhysics( mesh );
 					physicsHelper = new THREE.MMDPhysicsHelper( mesh );
 					physicsHelper.visible = false;
 					scene.add( physicsHelper );

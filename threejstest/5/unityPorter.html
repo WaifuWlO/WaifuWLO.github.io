@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js json unity loader</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<!-- Origin Trial Token, feature = WebVR (For Chrome M62+), origin = https://threejs.org, expires = 2018-04-03 -->
+		<meta http-equiv="origin-trial" data-feature="WebVR (For Chrome M62+)" data-expires="2018-04-03" content="AqIrNtaoJSmDZatgEEW2ehuK9ITIiFk3gZ3/gC6Vp0gF85NDYl7IzVPj4Bh7O6SIcr3ICOm6kocYSaS+BPkazgYAAABQeyJvcmlnaW4iOiJodHRwczovL3RocmVlanMub3JnOjQ0MyIsImZlYXR1cmUiOiJXZWJWUjEuMU02MiIsImV4cGlyeSI6MTUyMjc2MzAwMn0=">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #101010;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+			a {
+				color: #f00;
+			}
+		</style>
+	</head>
+	<body>
+
+		<script src="../three.min.js"></script>
+
+		<script src="../WebVR.js"></script>
+
+		<script>
+    
+      var renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.body.appendChild( renderer.domElement );
+
+var scene = new THREE.Scene();
+
+var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+
+var controls = new THREE.OrbitControls( camera );
+
+
+			var loader = new THREE.ObjectLoader();
+
+loader.load(
+	// resource URL
+	"../../models/json/threejsUnityPort2.json",
+
+	// onLoad callback
+	// Here the loaded data is assumed to be an object
+	function ( obj ) {
+		// Add the loaded object to the scene
+		scene.add( obj );
+	},
+
+	// onProgress callback
+	function ( xhr ) {
+		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+	},
+
+	// onError callback
+	function ( err ) {
+		console.error( 'An error happened' );
+	}
+);
+
+camera.position.set( 0, 20, 100 );
+controls.update();
+
+function animate() {
+
+	requestAnimationFrame( animate );
+
+	// required if controls.enableDamping or controls.autoRotate are set to true
+	controls.update();
+
+	renderer.render( scene, camera );
+
+}
+
+		</script>
+	</body>
+</html>
